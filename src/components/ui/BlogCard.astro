@@ -1,0 +1,58 @@
+---
+interface Props {
+    post: {
+        title: string;
+        date: string;
+        author: string;
+        slug: string;
+    };
+}
+
+const { post } = Astro.props;
+---
+
+<a href={"/blog/" + post.slug} class="article-link">
+    <article>
+        <p class="date">
+            {
+                new Date(post.date).toLocaleDateString("en-US", {
+                    dateStyle: "long",
+                })
+            }
+        </p>
+        <h4>{post.title}</h4>
+        <p class="author">{post.author}</p>
+    </article>
+</a>
+<style>
+    .article-link {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+    }
+
+    article {
+        margin-top: 0.5rem;
+        box-shadow: 0 0 1px var(--text););
+        border-radius: 0.25rem;
+        padding: 1rem;
+    }
+
+    article:hover {
+        box-shadow: 0 0 2px var(--primary);
+        transition: all 0.3s;
+    }
+
+    p.date {
+        color: var(--accent-alt);
+        font-size: 1rem;
+        margin: 0;
+        margin-bottom: 0.5rem;
+    }
+
+    p.author {
+        color: var(--text-light);
+        font-size: 1rem;
+        margin: 0;
+    }
+</style>

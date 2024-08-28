@@ -1,0 +1,51 @@
+---
+import BlurredShape from './ui/BlurredShape.astro';
+import Button from './ui/Button.astro';
+
+interface Props {
+    main: {
+        headings: string[];
+        paragraphs: string[];
+        button: {
+            text: string;
+            link: string;
+        };
+    };
+}
+
+const { main } = Astro.props;
+
+---
+<main class="container">
+    <BlurredShape/>
+    <small>Hi there</small>
+    <h1>{main.headings[0]}</h1>
+    <h2 class="heading-light">{main.headings[1]}</h2>
+    {main.paragraphs.map(pText => (
+        <p>{pText}</p>
+    ))}
+    <Button>{main.button.text}</Button>
+</main>
+<style>
+    small {
+        color: var(--accent-alt);
+        font-weight: 600;
+        font-size: 1rem;
+    }
+
+    main {
+        min-height: 60vh;
+        padding-top: 12rem;
+        position: relative;
+    }
+
+    p {
+        margin-top: 2rem;
+        max-width: 50ch;
+    }
+
+    h2.heading-light {
+        color: var(--accent-alt);
+    }
+
+</style>

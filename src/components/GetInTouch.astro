@@ -1,0 +1,30 @@
+---
+import Link from './ui/Link.astro';
+interface Props {
+    get_in_touch: {
+        title: string;
+        paragraphs: string[];
+        button: {
+            text: string;
+            link: string;
+        };
+    };
+}
+
+const { get_in_touch } = Astro.props;
+---
+<section class="container">
+    <h2>{get_in_touch.title}</h2>
+    {get_in_touch.paragraphs.map(pText => (
+        <p>{pText}</p>
+    ))}
+    <Link href={get_in_touch.button.link}>{get_in_touch.button.text}</Link>
+</section>
+
+<style>
+section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+</style>

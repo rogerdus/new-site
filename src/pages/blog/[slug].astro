@@ -1,0 +1,63 @@
+---
+import { parseSiteConfig } from "../../config";
+import BlogPostLayout from "../../layouts/BlogPostLayout.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const blogEntries = await getCollection("blog");
+  return blogEntries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+const { title, author, date, description } = entry.data;
+const { email, socials } = parseSiteConfig();
+
+---
+
+<BlogPostLayout site_title={title} site_description={description} socials={socials} email={email}>
+  <main class="container">
+  <h1 class="blog-title">{title}</h1>
+  <p class="attribution">
+    By <span class="highlight-text">{author}</span> 
+    on <span class="highlight-text">{date.toDateString()}</span>
+  </p>
+  <section class="content">
+  <Content />
+  </section>
+</main>
+</BlogPostLayout>
+<style>
+  p.attribution {
+    font-size: 0.9rem;
+    color: var(--text);
+    margin-bottom: 4rem;
+  }
+  .content {
+    line-height: 1.6;
+  }
+
+  .content :global(p) {
+    margin-bottom: 1.5rem;
+  }
+
+  .content :global(h2) {
+    font-size: 1.8rem;
+    margin-top: 4rem;
+    margin-bottom: 1rem;
+  }
+
+  .content :global(ul), .content :global(ol) {
+    margin-bottom: 1.5rem;
+    padding-left: 2rem;
+  }
+
+  .blog-title {
+    margin-top: 16rem;
+  }
+
+</style>

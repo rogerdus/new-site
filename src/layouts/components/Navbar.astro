@@ -1,0 +1,59 @@
+---
+import ThemeIcon from "./ThemeIcon.astro"
+---
+<nav class="container-wide">
+    <div class="logo">
+        <a href="/">
+            RG
+        </a>
+    </div>
+    <ul>
+        <li><a href="/blog">Blog</a></li>
+        <li><ThemeIcon/></li>
+    </ul>
+</nav>
+<style>
+    nav {
+        display: flex;
+        justify-content: space-between;
+        padding: 1rem 2rem;
+    }
+
+    ul {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+    }
+
+    nav a {
+        color: var(--primary);
+        text-decoration: none;
+        font-size: 1.2rem;
+        font-weight: 600;
+        line-height: 1.2rem;
+    }
+
+    nav a:hover {
+        color: var(--text-dark);
+        transition: all 0.3s;
+    }
+
+    div.logo {
+        display: flex;
+    }
+    div.logo > a {
+        color: var(--primary);
+        font-size: 1.5rem;
+        font-weight: 600;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+    }
+
+    div.logo > a:hover {
+        scale: 1.2;
+        color: var(--primary);
+        transition: all 0.3s;
+    }
+
+</style>

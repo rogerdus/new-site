@@ -1,0 +1,70 @@
+
+:root {
+    --slate: #0c1035;
+    --slate-light: #3e3d5e;
+    --slate-dark: #040924;
+    --gray: #dcdae6;
+    --gray-light: #f5f5f0;
+    --gray-dark: #d0cddc;
+    --accent: #D89D6A;
+    --accent-dark: #FCFF6C;
+    --accent-alt: #b9cee6;
+
+    --background: var(--slate-dark);
+    --background-light: var(--slate-light);
+    --text: var(--gray-dark);
+    --text-light: var(--gray-light);
+    --primary: var(--accent-dark);
+    --secondary: var(--accent-alt);
+}
+
+body {
+    font-family: system-ui, sans-serif;
+    background-color: var(--background);
+    color: var(--text);
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.container {
+    max-width: 900px;
+    margin: 6rem auto;
+    padding: 0 2rem;
+}
+
+.container-wide {
+    max-width: 100%;
+}
+
+span.highlight-text {
+    color: var(--primary);
+    font-weight: 600;
+}   
+
+body:not(.dark) {
+    --background: var(--gray-light);
+    --background-light: #fafaf6;
+    --text: var(--slate);
+    --text-light: var(--slate-light);
+    --primary: var(--accent);
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-light);
+    font-weight: 600;
+    line-height: 1;
+}
+
+h1 {
+    font-size: 3rem;
+}
+h2 {
+    font-size: 2rem;
+}
+h3 {
+    font-size: 1.6rem;
+}
+h4 {
+    font-size: 1.2rem;
+}

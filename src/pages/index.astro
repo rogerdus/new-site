@@ -1,0 +1,16 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MainSection from "../components/MainSection.astro";
+import AboutSection from "../components/AboutSection.astro"
+import RecentBlogSection from "../components/RecentBlogSection.astro";
+import GetInTouch from "../components/GetInTouch.astro";
+import { parseSiteConfig } from "../config";
+
+const { site_title, site_description, email, socials, main, about, get_in_touch} = parseSiteConfig();
+---
+<Layout site_title={site_title} site_description={site_description} email={email} socials={socials}>
+	<MainSection main={main}/>
+	<AboutSection about={about}/>
+	<RecentBlogSection/>
+	<GetInTouch get_in_touch={get_in_touch}/>
+</Layout>

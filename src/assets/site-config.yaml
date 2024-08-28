@@ -1,0 +1,29 @@
+site_title: "Supervivencia Linux"
+site_description: "Software Engineer"
+email: rogelio.interino@live.com
+socials:
+  twitter: "https://twitter.com/rogerdus4"
+  linkedin: "https://www.linkedin.com/in/rogelio-interino-de-la-rosa"
+  github: "https://github.com/rogerdus"
+main:
+  headings: 
+    - "I am Rogelio Interino"
+    - "Software Engineer"
+  paragraphs:
+    - "I’m web developer from Mexico. I’m passionate about linux"
+  button:
+    text: "Get in touch"
+    link: "https://www.supervivencialinux.com"
+
+about:
+  title: "About Me"
+  paragraphs: 
+    - "I was Started this blog to share my experiences in some themes about developer, Linux and other things to connect with others who share the same interests."
+
+get_in_touch:
+  title: "Get in touch"
+  paragraphs:
+    - "In case you would like to get in touch with me, you can always send me an email"
+  button:
+    text: "Send me an Email"
+    link: "mailto://rogelio.interino@live.com"
