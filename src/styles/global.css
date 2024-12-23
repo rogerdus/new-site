@@ -4,11 +4,11 @@
     --slate-light: #3e3d5e;
     --slate-dark: #040924;
     --gray: #dcdae6;
-    --gray-light: #f5f5f0;
+    --gray-light: #FAFAFF;
     --gray-dark: #d0cddc;
     --accent: #D89D6A;
-    --accent-dark: #FCFF6C;
-    --accent-alt: #b9cee6;
+    --accent-dark: #FAF33E;
+    --accent-alt: #E59500;
 
     --background: var(--slate-dark);
     --background-light: var(--slate-light);

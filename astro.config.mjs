@@ -3,6 +3,6 @@ import mdx from "@astrojs/mdx";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://ram-ghale.netlify.app",
+  site: "https://www.supervivencialinux.com/",
   integrations: [mdx()]
 });
