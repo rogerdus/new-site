@@ -6,7 +6,7 @@ const posts = await getCollection('blog');
 
 ---
 <section class="container">
-    <h2>Latest Posts</h2>
+    <h2>Últimos posts</h2>
     <div class="posts-container">
         {posts.slice(0,2).map((post) => (
 
@@ -14,7 +14,7 @@ const posts = await getCollection('blog');
         ))}
     </div>
     <div class="view-all-blogs">
-    <Link href="/blog">View all posts</Link>
+    <Link href="/blog">Ver todos los posts</Link>
     </div>
 </section>
 <style>

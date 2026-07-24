@@ -22,9 +22,8 @@ const { type = 'button' } = Astro.props;
     cursor: pointer;
   }
 
-  .custom-button:hover,
-  .custom-button:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px var(--primary);
+  .custom-button:hover {
+    background-color: var(--background-light);
+    transition: background-color 0.2s;
   }
 </style>

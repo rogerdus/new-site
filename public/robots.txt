@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.supervivencialinux.com/sitemap-index.xml

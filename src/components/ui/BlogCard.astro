@@ -15,7 +15,7 @@ const { post } = Astro.props;
     <article>
         <p class="date">
             {
-                new Date(post.date).toLocaleDateString("en-US", {
+                new Date(post.date).toLocaleDateString("es-ES", {
                     dateStyle: "long",
                 })
             }

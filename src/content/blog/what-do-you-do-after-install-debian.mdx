@@ -5,11 +5,14 @@ author: "Rogelio Interino"
 date: 2024-09-03
 ---
 
+import { Image } from 'astro:assets';
+import debianDesktop from '../../assets/images/debian12-default.jpg';
+
 # Debian 12 "Bookworm"
 
 > The Debian project released its final version of Debian 12 on **June 10, 2023**. After two years of development, this release is powered by the long-term supported **Linux Kernel 6.1 LTS**.
 
-![Desktop-Debian](https://www.debugpoint.com/wp-content/uploads/2023/03/Default-wallpaper.jpg "Debian 12 Default Desktop")
+<Image src={debianDesktop} alt="Debian 12 Default Desktop" />
 
 ---
 
@@ -110,4 +113,3 @@ apt install w64codecs w32codecs libdvdcss2 gstreamer1.0-libav
 ---
 
 Follow these steps to set up your Debian 12 system for optimal performance and usability. Happy Linuxing!
-
