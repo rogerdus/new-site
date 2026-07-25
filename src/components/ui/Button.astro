@@ -1,29 +1,20 @@
 ---
 interface Props {
   type?: 'button' | 'submit' | 'reset';
+  href?: string;
 }
 
-const { type = 'button' } = Astro.props;
+const { type = 'button', href } = Astro.props;
 ---
 
-<button type={type} class="custom-button">
-  <slot />
-</button>
-
-<style>
-  .custom-button {
-    background-color: var(--background);
-    border: 2px solid var(--primary);
-    border-radius: 0.25rem;
-    padding: 1rem 2rem;
-    font-size: 1rem;
-    color: var(--primary);
-    margin-top: 2rem;
-    cursor: pointer;
-  }
-
-  .custom-button:hover {
-    background-color: var(--background-light);
-    transition: background-color 0.2s;
-  }
-</style>
+{
+  href ? (
+    <a href={href} class="button">
+      <slot />
+    </a>
+  ) : (
+    <button type={type} class="button">
+      <slot />
+    </button>
+  )
+}

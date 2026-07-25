@@ -3,50 +3,153 @@ import { Image } from "astro:assets";
 import dpImage from "../assets/images/dp.png";
 
 interface Props {
-    about: {
-        title: string;
-        paragraphs: string[];
-    };
+  about: {
+    title: string;
+    paragraphs: string[];
+  };
 }
 
 const { about } = Astro.props;
+
+const skills = [
+  'Linux', 'Bash', 'Python', 'JavaScript',
+  'Docker', 'Nginx', 'Git', 'SSH',
+];
 ---
 
-<section class="container">
-    <div>
-        <h2>{about.title}</h2>
-        {about.paragraphs.map(pText => (
-            <p>{pText}</p>
-        ))}
+<section id="about">
+  <h2 class="numbered-heading">{about.title}</h2>
+  <div class="inner">
+    <div class="text">
+      {about.paragraphs.map(p => <p>{p}</p>)}
+      <ul class="skills-list">
+        {skills.map(skill => <li>{skill}</li>)}
+      </ul>
     </div>
-    <div class="image-container">
+    <div class="pic">
+      <div class="wrapper">
+        <div class="photo-overlay"></div>
         <Image
-            src={dpImage}
-            alt="Avatar de Rogelio Interino"
-            height={250}
-            width={250}
+          src={dpImage}
+          alt="Avatar de Rogelio Interino"
+          width={300}
+          height={300}
+          class="photo"
         />
+      </div>
     </div>
+  </div>
 </section>
+
 <style>
-    section {
-        display: flex;
-        justify-content: space-between;
-    }
+section#about {
+  max-width: 900px;
+}
 
-    @media screen and (max-width: 768px) {
-        section {
-            flex-direction: column;
-        }
-    }
+.inner {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 50px;
+}
 
-    p {
-        max-width: 60ch;
-    }
-    .image-container {
-        padding: 2rem;
-        padding-top: 4rem;
-        display: flex;
-        justify-content: center;
-    }
+@media (max-width: 768px) {
+  .inner {
+    display: block;
+  }
+}
+
+.text p {
+  max-width: 60ch;
+}
+
+.skills-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(140px, 200px));
+  gap: 0 10px;
+  padding: 0;
+  margin: 20px 0 0 0;
+  list-style: none;
+  overflow: hidden;
+}
+
+.skills-list li {
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 10px;
+  font-family: var(--font-mono);
+  font-size: var(--fz-xs);
+  color: var(--light-slate);
+}
+
+.skills-list li::before {
+  content: '\25B9';
+  position: absolute;
+  left: 0;
+  color: var(--green);
+}
+
+.pic {
+  position: relative;
+  max-width: 300px;
+}
+
+.wrapper {
+  position: relative;
+  width: 100%;
+  background-color: var(--green);
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+}
+
+.wrapper:hover {
+  transform: translate(-4px, -4px);
+}
+
+.wrapper:hover .photo {
+  filter: none;
+  mix-blend-mode: normal;
+}
+
+.photo {
+  position: relative;
+  width: 100%;
+  filter: grayscale(100%) contrast(1);
+  mix-blend-mode: multiply;
+  transition: var(--transition);
+}
+
+.photo-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--navy);
+  mix-blend-mode: screen;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.wrapper::after {
+  content: '';
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 100%;
+  height: 100%;
+  border: 2px solid var(--green);
+  border-radius: var(--border-radius);
+  z-index: -1;
+  transition: var(--transition);
+}
+
+.wrapper:hover::after {
+  transform: translate(8px, 8px);
+}
+
+@media (max-width: 768px) {
+  .pic {
+    margin: 50px auto 0;
+  }
+}
 </style>

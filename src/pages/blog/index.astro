@@ -1,19 +1,131 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-
 import { getCollection } from 'astro:content';
 import { parseSiteConfig } from "../../config";
-import BlogCard from "../../components/ui/BlogCard.astro";
 
 const posts = await getCollection('blog');
+posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 const { site_title, site_description, email, socials } = parseSiteConfig();
-
 ---
+
 <Layout site_title={"Blog | " + site_title} site_description={site_description} email={email} socials={socials}>
-    <main class="container">
-        <h1>Blog</h1>
-        {posts.map((post) => (
-                <BlogCard post={{ ...post.data, slug: post.slug}}/>
-        ))}
-        </main>
+  <main>
+    <h1 class="big-heading">Blog</h1>
+    <p class="subtitle">Guías y apuntes sobre Linux y desarrollo</p>
+    <div class="blog-grid">
+      {posts.map((post) => (
+        <a href={`/blog/${post.slug}`} class="blog-card">
+          <article>
+            <div class="bookmark-icon">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+              </svg>
+            </div>
+            <h3 class="post-title">{post.data.title}</h3>
+            <p class="post-description">{post.data.description}</p>
+            <footer class="post-footer">
+              <time class="post-date" datetime={post.data.date.toISOString()}>
+                {post.data.date.toLocaleDateString("es-ES", { year: 'numeric', month: 'short', day: 'numeric' })}
+              </time>
+              {post.data.tags && (
+                <ul class="post-tags">
+                  {post.data.tags.map(tag => <li>#{tag}</li>)}
+                </ul>
+              )}
+            </footer>
+          </article>
+        </a>
+      ))}
+    </div>
+  </main>
 </Layout>
+
+<style>
+h1.big-heading {
+  color: var(--lightest-slate);
+  margin-bottom: 10px;
+}
+
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 15px;
+  margin-top: 50px;
+}
+
+@media (max-width: 1080px) {
+  .blog-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+}
+
+.blog-card {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: var(--transition);
+}
+
+.blog-card:hover {
+  transform: translateY(-7px);
+}
+
+.blog-card article {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: var(--light-navy);
+  border-radius: var(--border-radius);
+  padding: 2rem 1.75rem;
+  box-shadow: 0 10px 30px -15px var(--navy-shadow);
+  transition: var(--transition);
+}
+
+.bookmark-icon {
+  color: var(--green);
+  margin-bottom: 15px;
+}
+
+.post-title {
+  font-size: var(--fz-xxl);
+  color: var(--lightest-slate);
+  margin: 0 0 15px 0;
+}
+
+.post-description {
+  color: var(--light-slate);
+  font-size: 17px;
+  margin: 0 0 15px 0;
+}
+
+.post-footer {
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding-top: 15px;
+}
+
+.post-date {
+  font-family: var(--font-mono);
+  font-size: var(--fz-xxs);
+  color: var(--light-slate);
+  text-transform: uppercase;
+}
+
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 5px;
+}
+
+.post-tags li {
+  font-family: var(--font-mono);
+  font-size: var(--fz-xxs);
+  color: var(--green);
+}
+</style>

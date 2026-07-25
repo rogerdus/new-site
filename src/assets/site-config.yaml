@@ -7,23 +7,24 @@ socials:
   github: "https://github.com/rogerdus"
 main:
   headings:
-    - "Hola, soy Rogelio"
+    - "Rogelio Interino"
     - "Ingeniero de software especializado en Linux"
   paragraphs:
     - "Escribo sobre administración de sistemas, terminal y desarrollo web — todo lo que aprendo lo comparto aquí, sin relleno."
   button:
     text: "Ver el blog"
-    link: "https://www.supervivencialinux.com/blog"
+    link: "/blog"
 
 about:
   title: "Sobre mí"
   paragraphs:
     - "Empecé este blog para compartir lo que voy aprendiendo sobre Linux, desarrollo y sistemas — y para conectar con gente a la que le interesan las mismas cosas. Nada de teoría sin uso: si algo está aquí, es porque lo usé yo primero."
+    - "Soy ingeniero de software con foco en administración de sistemas Linux. Trabajo con servidores, automatización, y herramientas de terminal. Este sitio lo construí desde cero con Astro, sin frameworks pesados."
 
 get_in_touch:
-  title: "Contacto"
+  title: "Contáctame"
   paragraphs:
-    - "Si quieres escribirme, siempre puedes mandarme un correo."
+    - "Si quieres hablar sobre Linux, sistemas, o cualquier tema del blog, siempre puedes mandarme un correo."
   button:
-    text: "Envíame un correo"
+    text: "Escríbeme"
     link: "mailto:rogelio.interino@live.com"
