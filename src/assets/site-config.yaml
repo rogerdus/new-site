@@ -8,9 +8,9 @@ socials:
 main:
   headings:
     - "Rogelio Interino"
-    - "Ingeniero de software especializado en Linux"
+    - "Ingeniero de software"
   paragraphs:
-    - "Escribo sobre administración de sistemas, terminal y desarrollo web — todo lo que aprendo lo comparto aquí, sin relleno."
+    - "Este es mi espacio para documentar y compartir conocimientos sobre desarrollo web, administración de sistemas, Linux y la terminal. Todo el contenido está basado en aprendizaje continuo, experiencias reales y soluciones prácticas."
     
   button:
     text: "Ver el blog"
@@ -19,8 +19,9 @@ main:
 about:
   title: "Sobre mí"
   paragraphs:
-    - "Empecé este blog para compartir lo que voy aprendiendo sobre Linux, desarrollo y sistemas — y para conectar con gente a la que le interesan las mismas cosas. Nada de teoría sin uso: si algo está aquí, es porque lo usé yo primero."
-    - "Soy ingeniero de software con foco en administración de sistemas Linux. Trabajo con servidores, automatización, y herramientas de terminal. Este sitio lo construí desde cero con Astro, sin frameworks pesados."
+    - "Empecé este blog para documentar lo que aprendo sobre Linux, desarrollo de software, administración de sistemas y tecnologías web. Comparto soluciones, herramientas y experiencias surgidas de proyectos reales, porque creo que la mejor forma de aprender es construyendo."
+    - "Soy ingeniero de software y disfruto crear aplicaciones, automatizar procesos y trabajar con infraestructura Linux. Este sitio, construido con Astro, es mi espacio para compartir conocimiento y seguir aprendiendo junto con la comunidad."
+    - "Aqui algunas de las tecnologias con las que trabajo actualmente"
 
 get_in_touch:
   title: "Contáctame"
