@@ -8,10 +8,10 @@ const visibleProjects = projects.slice(0, GRID_LIMIT);
 ---
 
 <section>
-  <h2>Otros proyectos destacados</h2>
+  <h2 class="reveal" style="transition-delay: 0ms;">Otros proyectos destacados</h2>
   <ul class="projects-grid">
-    {visibleProjects.map(project => (
-      <li class="project-card">
+    {visibleProjects.map((project, i) => (
+      <li class="project-card reveal" style={`transition-delay: ${(i + 1) * 50}ms;`}>
         <div class="project-inner">
           <header>
             <div class="project-top">

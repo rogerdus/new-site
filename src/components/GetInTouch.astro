@@ -14,10 +14,10 @@ const { get_in_touch } = Astro.props;
 ---
 
 <section id="contact">
-  <p class="overline numbered-heading">¿Qué sigue?</p>
-  <h2 class="title">{get_in_touch.title}</h2>
-  {get_in_touch.paragraphs.map(p => <p class="contact-text">{p}</p>)}
-  <a href={get_in_touch.button.link} class="big-button email-link">{get_in_touch.button.text}</a>
+  <p class="overline numbered-heading reveal" style="transition-delay: 0ms;">¿Qué sigue?</p>
+  <h2 class="title reveal" style="transition-delay: 100ms;">{get_in_touch.title}</h2>
+  {get_in_touch.paragraphs.map((p, i) => <p class="contact-text reveal" style={`transition-delay: ${200 + i * 100}ms;`}>{p}</p>)}
+  <a href={get_in_touch.button.link} class="big-button email-link reveal" style="transition-delay: 300ms;">{get_in_touch.button.text}</a>
 </section>
 
 <style>

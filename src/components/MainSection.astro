@@ -41,19 +41,33 @@ const { main } = Astro.props;
   font-size: clamp(var(--fz-sm), 5vw, var(--fz-md));
   font-weight: 400;
   margin: 0 0 30px 4px;
+  animation: fadeUp 0.5s var(--easing) 0s both;
 }
 
 .name {
   color: var(--lightest-slate);
+  animation: fadeUp 0.5s var(--easing) 0.1s both;
 }
 
 .subtitle-hero {
   color: var(--slate);
+  animation: fadeUp 0.5s var(--easing) 0.2s both;
 }
 
 .description {
   margin-top: 25px;
   max-width: 540px;
+  animation: fadeUp 0.5s var(--easing) 0.3s both;
+}
+
+.hero > div:last-child {
+  animation: fadeUp 0.5s var(--easing) 0.4s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro, .name, .subtitle-hero, .description, .hero > div:last-child {
+    animation: none;
+  }
 }
 
 @media (max-height: 700px) and (min-width: 700px) {

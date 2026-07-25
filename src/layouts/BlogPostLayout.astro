@@ -33,5 +33,19 @@ const { site_title, site_description, email, socials } = Astro.props;
 			<slot />
 		</div>
 		<Footer socials={socials} />
+		<script is:inline>
+			const revealObserver = new IntersectionObserver((entries) => {
+				entries.forEach(entry => {
+					if (entry.isIntersecting) {
+						entry.target.classList.add('visible');
+						revealObserver.unobserve(entry.target);
+					}
+				});
+			}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+			window.addEventListener('DOMContentLoaded', () => {
+				document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+			});
+		</script>
 	</body>
 </html>

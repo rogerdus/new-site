@@ -11,6 +11,7 @@ main:
     - "Ingeniero de software especializado en Linux"
   paragraphs:
     - "Escribo sobre administración de sistemas, terminal y desarrollo web — todo lo que aprendo lo comparto aquí, sin relleno."
+    
   button:
     text: "Ver el blog"
     link: "/blog"

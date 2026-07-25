@@ -6,10 +6,10 @@ projects.sort((a, b) => a.data.date.localeCompare(b.data.date));
 ---
 
 <section id="projects">
-  <h2 class="numbered-heading">Algunas cosas que he construido</h2>
+  <h2 class="numbered-heading reveal" style="transition-delay: 0ms;">Algunas cosas que he construido</h2>
   <ul class="featured-list">
     {projects.map((project, i) => (
-      <li class="featured-item">
+      <li class="featured-item reveal" style={`transition-delay: ${(i + 1) * 100}ms;`}>
         <div class="project-content" data-side={i % 2 === 0 ? 'right' : 'left'}>
           <div>
             <p class="project-overline">Proyecto destacado</p>
