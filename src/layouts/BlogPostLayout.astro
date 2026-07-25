@@ -26,6 +26,8 @@ const { site_title, site_description, email, socials } = Astro.props;
 		<title>{site_title}</title>
 	</head>
 	<body>
+		<div id="bg-gradient"></div>
+		<div id="cursor-glow"></div>
 		<a class="skip-link" href="#content">Saltar al contenido</a>
 		<Navbar />
 		<Sidebars email={email} socials={socials} />
@@ -45,6 +47,14 @@ const { site_title, site_description, email, socials } = Astro.props;
 
 			window.addEventListener('DOMContentLoaded', () => {
 				document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+			});
+
+			const glow = document.getElementById('cursor-glow');
+			document.addEventListener('mousemove', (e) => {
+				if (glow) {
+					glow.style.left = e.clientX + 'px';
+					glow.style.top = e.clientY + 'px';
+				}
 			});
 		</script>
 	</body>
