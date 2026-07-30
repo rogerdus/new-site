@@ -1,0 +1,154 @@
+---
+import { getCollection } from 'astro:content';
+
+const GRID_LIMIT = 6;
+const projects = await getCollection('projects', ({ data }) => data.showInProjects !== false);
+projects.sort((a, b) => b.data.date.localeCompare(a.data.date));
+const visibleProjects = projects.slice(0, GRID_LIMIT);
+---
+
+<section>
+  <h2 class="reveal" style="transition-delay: 0ms;">Otros proyectos destacados</h2>
+  <ul class="projects-grid">
+    {visibleProjects.map((project, i) => (
+      <li class="project-card reveal" style={`transition-delay: ${(i + 1) * 50}ms;`}>
+        <div class="project-inner">
+          <header>
+            <div class="project-top">
+              <div class="folder-icon">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                  <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+                </svg>
+              </div>
+              <div class="project-links">
+                {project.data.github && (
+                  <a href={project.data.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+                    </svg>
+                  </a>
+                )}
+                {project.data.external && (
+                  <a href={project.data.external} target="_blank" rel="noopener noreferrer" aria-label="Enlace externo">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                      <polyline points="15 3 21 3 21 9" />
+                      <line x1="10" y1="14" x2="21" y2="3" />
+                    </svg>
+                  </a>
+                )}
+              </div>
+            </div>
+            <h3 class="project-title">{project.data.title}</h3>
+          </header>
+          <div class="project-description">
+            <p>{project.data.description}</p>
+          </div>
+          <footer>
+            <ul class="project-tech-list">
+              {project.data.tech.map(t => <li>{t}</li>)}
+            </ul>
+          </footer>
+        </div>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+section {
+  max-width: 1000px;
+  padding-top: 50px;
+}
+
+h2 {
+  text-align: center;
+  font-size: clamp(26px, 5vw, var(--fz-heading));
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 15px;
+  list-style: none;
+  padding: 0;
+  margin-top: 50px;
+}
+
+@media (max-width: 1080px) {
+  .projects-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+}
+
+.project-card {
+  position: relative;
+}
+
+.project-inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: var(--light-navy);
+  border-radius: var(--border-radius);
+  padding: 2rem 1.75rem;
+  box-shadow: 0 10px 30px -15px var(--navy-shadow);
+  transition: var(--transition);
+}
+
+.project-inner:hover,
+.project-inner:focus-within {
+  transform: translateY(-7px);
+}
+
+.project-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.folder-icon {
+  color: var(--green);
+}
+
+.project-links {
+  display: flex;
+  gap: 15px;
+}
+
+.project-links a {
+  color: var(--light-slate);
+  transition: var(--transition);
+}
+
+.project-links a:hover,
+.project-links a:focus-visible {
+  color: var(--green);
+  transform: translateY(-3px);
+  outline: none;
+}
+
+.project-title {
+  font-size: var(--fz-xxl);
+  color: var(--lightest-slate);
+  margin: 25px 0 15px 0;
+}
+
+.project-description p {
+  margin: 0;
+  color: var(--light-slate);
+  font-size: 17px;
+}
+
+.project-tech-list {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 20px 0 0 0;
+  margin-top: auto;
+  gap: 15px;
+  font-family: var(--font-mono);
+  font-size: var(--fz-xxs);
+  color: var(--light-slate);
+}
+</style>

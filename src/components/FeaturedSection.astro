@@ -1,0 +1,184 @@
+---
+import { getCollection } from 'astro:content';
+
+const projects = await getCollection('featured');
+projects.sort((a, b) => a.data.date.localeCompare(b.data.date));
+---
+
+<section id="projects">
+  <h2 class="numbered-heading reveal" style="transition-delay: 0ms;">Algunas cosas que he construido</h2>
+  <ul class="featured-list">
+    {projects.map((project, i) => (
+      <li class="featured-item reveal" style={`transition-delay: ${(i + 1) * 100}ms;`}>
+        <div class="project-content" data-side={i % 2 === 0 ? 'right' : 'left'}>
+          <div>
+            <p class="project-overline">Proyecto destacado</p>
+            <h3 class="project-title">{project.data.title}</h3>
+            <div class="project-description">
+              <p>{project.data.description}</p>
+            </div>
+            <ul class="project-tech-list">
+              {project.data.tech.map(t => <li>{t}</li>)}
+            </ul>
+            <div class="project-links">
+              {project.data.github && (
+                <a href={project.data.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+                  </svg>
+                </a>
+              )}
+              {project.data.external && (
+                <a href={project.data.external} target="_blank" rel="noopener noreferrer" aria-label="Enlace externo">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                    <polyline points="15 3 21 3 21 9" />
+                    <line x1="10" y1="14" x2="21" y2="3" />
+                  </svg>
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+section#projects {
+  max-width: 1000px;
+}
+
+.featured-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.featured-item:not(:last-of-type) {
+  margin-bottom: 100px;
+}
+
+@media (max-width: 768px) {
+  .featured-item:not(:last-of-type) { margin-bottom: 70px; }
+}
+
+@media (max-width: 480px) {
+  .featured-item:not(:last-of-type) { margin-bottom: 30px; }
+}
+
+.project-content {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+}
+
+.project-content[data-side="right"] {
+  text-align: right;
+}
+
+.project-overline {
+  color: var(--green);
+  font-family: var(--font-mono);
+  font-size: var(--fz-xs);
+  margin: 0 0 10px 0;
+}
+
+.project-title {
+  color: var(--lightest-slate);
+  font-size: clamp(24px, 5vw, 28px);
+  margin: 0 0 20px 0;
+}
+
+.project-description {
+  background-color: var(--light-navy);
+  padding: 25px;
+  border-radius: var(--border-radius);
+  box-shadow: 0 10px 30px -15px var(--navy-shadow);
+  position: relative;
+}
+
+.project-description p {
+  margin: 0;
+  color: var(--light-slate);
+}
+
+.project-content[data-side="right"] .project-description {
+  width: 115%;
+}
+
+.project-content[data-side="left"] .project-description {
+  width: 115%;
+}
+
+@media (max-width: 1080px) {
+  .project-content[data-side="right"] .project-description,
+  .project-content[data-side="left"] .project-description {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .project-description {
+    background-color: var(--light-navy);
+    padding: 20px;
+  }
+  .project-content[data-side="right"] {
+    text-align: left;
+  }
+}
+
+.project-tech-list {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 20px 0 0 0;
+  margin: 0;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: var(--fz-xs);
+  color: var(--light-slate);
+}
+
+.project-content[data-side="right"] .project-tech-list {
+  justify-content: flex-end;
+}
+
+@media (max-width: 768px) {
+  .project-content[data-side="right"] .project-tech-list {
+    justify-content: flex-start;
+  }
+  .project-tech-list {
+    gap: 5px;
+  }
+}
+
+.project-links {
+  display: flex;
+  margin-top: 10px;
+  gap: 15px;
+}
+
+.project-content[data-side="right"] .project-links {
+  justify-content: flex-end;
+}
+
+@media (max-width: 768px) {
+  .project-content[data-side="right"] .project-links {
+    justify-content: flex-start;
+  }
+}
+
+.project-links a {
+  color: var(--lightest-slate);
+  transition: var(--transition);
+}
+
+.project-links a:hover,
+.project-links a:focus-visible {
+  color: var(--green);
+  transform: translateY(-3px);
+  outline: none;
+}
+</style>

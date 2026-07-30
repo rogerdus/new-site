@@ -1,63 +1,86 @@
 ---
-import BlurredShape from './ui/BlurredShape.astro';
-import Button from './ui/Button.astro';
-
 interface Props {
-    main: {
-        headings: string[];
-        paragraphs: string[];
-        button: {
-            text: string;
-            link: string;
-        };
+  main: {
+    headings: string[];
+    paragraphs: string[];
+    button: {
+      text: string;
+      link: string;
     };
+  };
 }
 
 const { main } = Astro.props;
-
 ---
-<main class="container">
-    <BlurredShape/>
-    <small>Hola</small>
-    <h1>{main.headings[0]}</h1>
-    <h2 class="heading-light">{main.headings[1]}</h2>
-    {main.paragraphs.map(pText => (
-        <p>{pText}</p>
-    ))}
-    <Button>{main.button.text}</Button>
-</main>
+
+<section class="hero">
+  <h2 class="intro">Hola, soy</h2>
+  <h1 class="big-heading name">{main.headings[0]}</h1>
+  <h3 class="big-heading subtitle-hero">{main.headings[1]}</h3>
+  <div class="description">
+    {main.paragraphs.map(p => <p>{p}</p>)}
+  </div>
+  <div>
+    <a href={main.button.link} class="big-button">{main.button.text}</a>
+  </div>
+</section>
+
 <style>
-    small {
-        color: var(--accent-alt);
-        font-weight: 600;
-        font-size: 1rem;
-    }
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 0;
+}
 
-    main {
-        min-height: 60vh;
-        padding-top: 12rem;
-        position: relative;
-    }
+.intro {
+  color: var(--green);
+  font-family: var(--font-mono);
+  font-size: clamp(var(--fz-sm), 5vw, var(--fz-md));
+  font-weight: 400;
+  margin: 0 0 30px 4px;
+  animation: fadeUp 0.5s var(--easing) 0s both;
+}
 
-    p {
-        margin-top: 2rem;
-        max-width: 50ch;
-    }
+.name {
+  color: var(--lightest-slate);
+  animation: fadeUp 0.5s var(--easing) 0.1s both;
+}
 
-    h2.heading-light {
-        color: var(--accent-alt);
-    }
+.subtitle-hero {
+  color: var(--slate);
+  animation: fadeUp 0.5s var(--easing) 0.2s both;
+}
 
-    @media screen and (max-width: 480px) {
-        main {
-            padding-top: 6rem;
-        }
-        h1 {
-            font-size: 2rem;
-        }
-        h2.heading-light {
-            font-size: 1.4rem;
-        }
-    }
+.description {
+  margin-top: 25px;
+  max-width: 540px;
+  animation: fadeUp 0.5s var(--easing) 0.3s both;
+}
 
+.hero > div:last-child {
+  animation: fadeUp 0.5s var(--easing) 0.4s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro, .name, .subtitle-hero, .description, .hero > div:last-child {
+    animation: none;
+  }
+}
+
+@media (max-height: 700px) and (min-width: 700px) {
+  .hero {
+    padding-top: var(--nav-height);
+    min-height: auto;
+  }
+}
+
+@media (max-width: 360px) {
+  .hero {
+    padding-top: var(--nav-height);
+    min-height: auto;
+  }
+}
 </style>

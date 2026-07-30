@@ -14,50 +14,136 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { Content } = await entry.render();
 
-const { title, author, date, description } = entry.data;
+const { title, author, date, description, tags } = entry.data;
 const { email, socials } = parseSiteConfig();
-
+const formattedDate = date.toLocaleDateString("es-ES", { year: 'numeric', month: 'long', day: 'numeric' });
 ---
 
-<BlogPostLayout site_title={title} site_description={description} socials={socials} email={email}>
-  <main class="container">
-  <h1 class="blog-title">{title}</h1>
-  <p class="attribution">
-    By <span class="highlight-text">{author}</span> 
-    on <span class="highlight-text">{date.toDateString()}</span>
-  </p>
-  <section class="content">
-  <Content />
-  </section>
-</main>
+<BlogPostLayout site_title={`${title} | Supervivencia Linux`} site_description={description} socials={socials} email={email}>
+  <main>
+    <span class="breadcrumb">
+      <span class="arrow">&larr;</span>
+      <a href="/blog">Todos los posts</a>
+    </span>
+    <header class="post-header">
+      <h1 class="medium-heading">{title}</h1>
+      <p class="subtitle">
+        <time datetime={date.toISOString()}>{formattedDate}</time>
+        {tags && (
+          <span class="tags">
+            {tags.map(tag => <a href={`/blog`}>#{tag}</a>)}
+          </span>
+        )}
+      </p>
+    </header>
+    <div class="post-content">
+      <Content />
+    </div>
+  </main>
 </BlogPostLayout>
+
 <style>
-  p.attribution {
-    font-size: 0.9rem;
-    color: var(--text);
-    margin-bottom: 4rem;
-  }
-  .content {
-    line-height: 1.6;
-  }
+main {
+  max-width: 1000px;
+}
 
-  .content :global(p) {
-    margin-bottom: 1.5rem;
-  }
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  margin-bottom: 50px;
+  color: var(--green);
+}
 
-  .content :global(h2) {
-    font-size: 1.8rem;
-    margin-top: 4rem;
-    margin-bottom: 1rem;
-  }
+.breadcrumb .arrow {
+  display: block;
+  margin-right: 10px;
+  padding-top: 4px;
+}
 
-  .content :global(ul), .content :global(ol) {
-    margin-bottom: 1.5rem;
-    padding-left: 2rem;
-  }
+.breadcrumb a {
+  font-family: var(--font-mono);
+  font-size: var(--fz-sm);
+  font-weight: 600;
+  line-height: 1.5;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--green);
+}
 
-  .blog-title {
-    margin-top: 16rem;
-  }
+.post-header {
+  margin-bottom: 50px;
+}
 
+.post-header h1 {
+  margin-bottom: 15px;
+}
+
+.tags {
+  margin-left: 10px;
+}
+
+.tags a {
+  color: var(--green);
+  font-family: var(--font-mono);
+  margin-right: 5px;
+}
+
+.post-content {
+  margin-bottom: 100px;
+}
+
+.post-content :global(h2),
+.post-content :global(h3),
+.post-content :global(h4) {
+  margin: 2em 0 1em;
+}
+
+.post-content :global(p) {
+  margin: 1em 0;
+  line-height: 1.5;
+  color: var(--light-slate);
+}
+
+.post-content :global(ul),
+.post-content :global(ol) {
+  margin-bottom: 1.5rem;
+  padding-left: 2rem;
+}
+
+.post-content :global(li) {
+  margin-bottom: 0.5rem;
+}
+
+.post-content :global(pre) {
+  background-color: var(--light-navy);
+  border-radius: var(--border-radius);
+  padding: 1.25rem;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+}
+
+.post-content :global(code) {
+  font-family: var(--font-mono);
+  font-size: var(--fz-sm);
+}
+
+.post-content :global(pre code) {
+  background-color: transparent;
+  padding: 0;
+}
+
+.post-content :global(blockquote) {
+  border-left: 1px solid var(--green);
+  padding-left: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.post-content :global(a) {
+  color: var(--green);
+}
+
+.post-content :global(img) {
+  border-radius: var(--border-radius);
+  margin: 1.5rem 0;
+}
 </style>

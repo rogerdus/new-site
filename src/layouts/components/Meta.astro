@@ -14,6 +14,10 @@ const current_url = Astro.site ? new URL(Astro.url.pathname, Astro.site).toStrin
 
 <link rel="canonical" href={current_url} />
 
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet" />
+
 <meta property="og:title" content={site_title} />
 <meta property="og:description" content={site_description} />
 <meta property="og:image" content="/og.png" />
@@ -32,6 +36,4 @@ const current_url = Astro.site ? new URL(Astro.url.pathname, Astro.site).toStrin
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 <meta name="msapplication-TileColor" content="#da532c">
 
-<meta name="theme-color" content="#d0cddc" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#040924" media="(prefers-color-scheme: dark)">
-
+<meta name="theme-color" content="#0a192f">

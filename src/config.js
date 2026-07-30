@@ -5,7 +5,7 @@ import { z } from 'zod';
 // Define the Zod schema
 const ButtonSchema = z.object({
   text: z.string(),
-  link: z.string().url(),
+  link: z.string(),
 });
 
 const MainSchema = z.object({

@@ -1,9 +1,8 @@
 ---
 import Meta from "./components/Meta.astro";
-import SideFrameNav from "./components/SideFrameNav.astro";
-import BlogFooterNav from "./components/BlogFooterNav.astro";
-import ThemeIcon from "./components/ThemeIcon.astro";
+import Sidebars from "./components/Sidebars.astro";
 import Footer from "./components/Footer.astro";
+import Navbar from "./components/Navbar.astro";
 
 import "../styles/global.css";
 interface Props {
@@ -18,43 +17,45 @@ interface Props {
 }
 
 const { site_title, site_description, email, socials } = Astro.props;
-
-// TODO: Add the left and right social, email menus (not on mobile)
 ---
 
 <!doctype html>
 <html lang="es">
 	<head>
 		<Meta site_title={site_title} site_description={site_description} />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<title>{site_title}</title>
-		<script is:inline>
-			const theme = (() => {
-				if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-					return localStorage.getItem('theme');
-				}
-				if (window.matchMedia('(prefers-color-scheme: light)').matches) {
-					return 'light';
-				}
-				return 'dark';
-			})();
-			if (theme === 'light') {
-				document.documentElement.classList.remove('dark');
-			} else {
-				document.documentElement.classList.add('dark');
-			}
-		</script>
-		<style>
-			.theme-toggle-container { position: absolute; top: 1rem; right: 1rem; }
-		</style>
 	</head>
 	<body>
-		<div class="theme-toggle-container">
-			<ThemeIcon/>
+		<div id="bg-gradient"></div>
+		<div id="cursor-glow"></div>
+		<a class="skip-link" href="#content">Saltar al contenido</a>
+		<Navbar />
+		<Sidebars email={email} socials={socials} />
+		<div id="content">
+			<slot />
 		</div>
-		<slot />
-		<SideFrameNav email={email} socials={socials} />
-		<BlogFooterNav />
-		<Footer />
+		<Footer socials={socials} />
+		<script is:inline>
+			const revealObserver = new IntersectionObserver((entries) => {
+				entries.forEach(entry => {
+					if (entry.isIntersecting) {
+						entry.target.classList.add('visible');
+						revealObserver.unobserve(entry.target);
+					}
+				});
+			}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+			window.addEventListener('DOMContentLoaded', () => {
+				document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+			});
+
+			const glow = document.getElementById('cursor-glow');
+			document.addEventListener('mousemove', (e) => {
+				if (glow) {
+					glow.style.left = e.clientX + 'px';
+					glow.style.top = e.clientY + 'px';
+				}
+			});
+		</script>
 	</body>
 </html>
