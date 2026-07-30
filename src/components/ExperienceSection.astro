@@ -1,0 +1,266 @@
+---
+import { getCollection, render } from 'astro:content';
+
+const jobs = await getCollection('jobs');
+jobs.sort((a, b) => b.data.date.localeCompare(a.data.date));
+
+const jobsWithContent = await Promise.all(
+  jobs.map(async (job) => {
+    const { Content } = await render(job);
+    return { ...job, Content };
+  })
+);
+---
+
+<section id="experiencia" class="reveal">
+  <h2 class="numbered-heading">Dónde he trabajado</h2>
+
+  <div class="jobs-inner">
+    <div class="tab-list" role="tablist" aria-label="Pestañas de trabajos" id="jobTabList">
+      {jobsWithContent.map((job, i) => (
+        <button
+          class="tab-button"
+          role="tab"
+          id={`tab-${i}`}
+          aria-selected={i === 0 ? 'true' : 'false'}
+          aria-controls={`panel-${i}`}
+          tabindex={i === 0 ? '0' : '-1'}
+          data-index={i}
+        >
+          {job.data.company}
+        </button>
+      ))}
+      <div class="tab-highlight" id="tabHighlight"></div>
+    </div>
+
+    <div class="tab-panels">
+      {jobsWithContent.map((job, i) => (
+        <div
+          class="tab-panel"
+          id={`panel-${i}`}
+          role="tabpanel"
+          aria-labelledby={`tab-${i}`}
+          hidden={i !== 0}
+        >
+          <h3>
+            <span>{job.data.title}</span>
+            <span class="company">
+              {' '}@{' '}
+              {job.data.url ? (
+                <a href={job.data.url} target="_blank" rel="noopener noreferrer" class="inline-link">{job.data.company}</a>
+              ) : (
+                job.data.company
+              )}
+            </span>
+          </h3>
+          <p class="range">{job.data.range}{job.data.location ? ` · ${job.data.location}` : ''}</p>
+          <div class="job-description">
+            <job.Content />
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  function initJobTabs() {
+    const tabList = document.getElementById('jobTabList');
+    if (!tabList) return;
+
+    const tabs = Array.from(tabList.querySelectorAll('.tab-button'));
+    const highlight = document.getElementById('tabHighlight');
+    const panels = Array.from(document.querySelectorAll('.tab-panel'));
+
+    function activate(index) {
+      tabs.forEach((tab, i) => {
+        const isActive = i === index;
+        tab.setAttribute('aria-selected', String(isActive));
+        tab.setAttribute('tabindex', isActive ? '0' : '-1');
+      });
+      panels.forEach((panel, i) => {
+        panel.hidden = i !== index;
+      });
+      if (highlight) {
+        const isMobile = window.matchMedia('(max-width: 600px)').matches;
+        highlight.style.transform = isMobile
+          ? `translateX(calc(${index} * 120px))`
+          : `translateY(calc(${index} * var(--tab-height, 42px)))`;
+      }
+    }
+
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => activate(i));
+      tab.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+          e.preventDefault();
+          const next = (i + 1) % tabs.length;
+          tabs[next].focus();
+          activate(next);
+        } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+          e.preventDefault();
+          const prev = (i - 1 + tabs.length) % tabs.length;
+          tabs[prev].focus();
+          activate(prev);
+        }
+      });
+    });
+  }
+
+  document.addEventListener('astro:page-load', initJobTabs);
+  initJobTabs();
+</script>
+
+<style>
+section {
+  max-width: 700px;
+  padding-top: 50px;
+}
+
+.jobs-inner {
+  display: flex;
+  margin-top: 30px;
+}
+
+@media (max-width: 600px) {
+  .jobs-inner {
+    display: block;
+  }
+}
+
+@media (min-width: 700px) {
+  .jobs-inner {
+    min-height: 340px;
+  }
+}
+
+.tab-list {
+  position: relative;
+  z-index: 3;
+  width: max-content;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 600px) {
+  .tab-list {
+    flex-direction: row;
+    overflow-x: auto;
+    width: 100%;
+    margin-bottom: 30px;
+  }
+}
+
+.tab-button {
+  --tab-height: 42px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: var(--tab-height);
+  padding: 0 20px 2px;
+  border: none;
+  border-left: 2px solid var(--light-navy);
+  background-color: transparent;
+  color: var(--light-slate);
+  font-family: var(--font-mono);
+  font-size: var(--fz-xs);
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.tab-button[aria-selected="true"] {
+  color: var(--green);
+}
+
+.tab-button:hover,
+.tab-button:focus-visible {
+  background-color: var(--light-navy);
+  outline: none;
+}
+
+@media (max-width: 600px) {
+  .tab-button {
+    min-width: 120px;
+    padding: 0 15px;
+    border-left: 0;
+    border-bottom: 2px solid var(--light-navy);
+    justify-content: center;
+  }
+}
+
+.tab-highlight {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 2px;
+  height: 42px;
+  background: var(--green);
+  transition: transform 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+@media (max-width: 600px) {
+  .tab-highlight {
+    top: auto;
+    bottom: 0;
+    width: 120px;
+    max-width: 120px;
+    height: 2px;
+  }
+}
+
+.tab-panels {
+  position: relative;
+  width: 100%;
+  margin-left: 20px;
+}
+
+@media (max-width: 600px) {
+  .tab-panels {
+    margin-left: 0;
+  }
+}
+
+.tab-panel h3 {
+  margin-bottom: 2px;
+  font-size: var(--fz-xxl);
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--lightest-slate);
+}
+
+.tab-panel .company {
+  color: var(--green);
+}
+
+.tab-panel .range {
+  margin-bottom: 25px;
+  color: var(--light-slate);
+  font-family: var(--font-mono);
+  font-size: var(--fz-xs);
+}
+
+.job-description :global(ul) {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.job-description :global(li) {
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 10px;
+  color: var(--light-slate);
+}
+
+.job-description :global(li)::before {
+  content: '▹';
+  position: absolute;
+  left: 0;
+  color: var(--green);
+}
+</style>

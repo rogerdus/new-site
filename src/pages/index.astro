@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import MainSection from "../components/MainSection.astro";
 import AboutSection from "../components/AboutSection.astro";
+import ExperienceSection from "../components/ExperienceSection.astro";
 import FeaturedSection from "../components/FeaturedSection.astro";
 import ProjectsSection from "../components/ProjectsSection.astro";
 import GetInTouch from "../components/GetInTouch.astro";
@@ -14,6 +15,7 @@ const { site_title, site_description, email, socials, main, about, get_in_touch 
 	<main class="fillHeight">
 		<MainSection main={main} />
 		<AboutSection about={about} />
+		<ExperienceSection />
 		<FeaturedSection />
 		<ProjectsSection />
 		<GetInTouch get_in_touch={get_in_touch} />
