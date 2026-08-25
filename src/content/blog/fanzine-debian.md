@@ -1,6 +1,6 @@
 ---
 title: "Lo que aprendí de Eugenia Bahit en un fanzine de Debian de 2012 (y qué sigue vigente en 2026)"
-date: "2026-08-14"
+date: 2026-08-24
 author: "Rogelio Interino"
 tags: ["debian", "linux", "opinión", "programación"]
 description: "Repaso dos artículos de Eugenia Bahit publicados en DebianHackers Elementals — sobre hardware y lenguajes de programación — y evalúo qué sigue siendo válido hoy en Debian y qué ya no."
