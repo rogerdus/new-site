@@ -16,18 +16,18 @@ const { isHome = false } = Astro.props;
       <li><a href="/blog">Blog</a></li>
       <li><a href="/#contact">Proyecto</a></li>
     </ol>
-    <button class="hamburger" id="hamburger" aria-label="Menú">
+    <button class="hamburger" id="hamburger" aria-label="Menú" aria-expanded="false" aria-controls="mobile-menu">
       <div class="ham-bar"></div>
     </button>
   </nav>
 </header>
 
-<aside class="mobile-menu" id="mobile-menu">
+<aside class="mobile-menu" id="mobile-menu" aria-hidden="true">
   <ol>
-    <li><a href="/#about"><span>01.</span> Sobre mí</a></li>
-    <li><a href="/#projects"><span>02.</span> Proyectos</a></li>
+    <li><a href="/#about"><span>01.</span> Guías</a></li>
+    <li><a href="/#projects"><span>02.</span> Recursos</a></li>
     <li><a href="/blog"><span>03.</span> Blog</a></li>
-    <li><a href="/#contact"><span>04.</span> Contacto</a></li>
+    <li><a href="/#contact"><span>04.</span> Proyecto</a></li>
   </ol>
 </aside>
 
@@ -215,25 +215,27 @@ nav {
   const mobileMenu = document.getElementById('mobile-menu');
   const body = document.body;
 
+  const setMenuState = (isOpen) => {
+    hamburger?.classList.toggle('active', isOpen);
+    mobileMenu?.classList.toggle('active', isOpen);
+    hamburger?.setAttribute('aria-expanded', String(isOpen));
+    mobileMenu?.setAttribute('aria-hidden', String(!isOpen));
+    body.classList.toggle('blur', isOpen);
+  };
+
   const toggleMenu = () => {
-    hamburger.classList.toggle('active');
-    mobileMenu.classList.toggle('active');
-    body.classList.toggle('blur');
+    setMenuState(!mobileMenu?.classList.contains('active'));
   };
 
   hamburger?.addEventListener('click', toggleMenu);
   document.querySelectorAll('.mobile-menu a').forEach(a => {
     a.addEventListener('click', () => {
-      hamburger?.classList.remove('active');
-      mobileMenu?.classList.remove('active');
-      body.classList.remove('blur');
+      setMenuState(false);
     });
   });
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && mobileMenu?.classList.contains('active')) {
-      hamburger?.classList.remove('active');
-      mobileMenu?.classList.remove('active');
-      body.classList.remove('blur');
+      setMenuState(false);
     }
   });
 
@@ -241,6 +243,7 @@ nav {
   const header = document.getElementById('nav-header');
   window.addEventListener('scroll', () => {
     const y = window.pageYOffset;
+    if (!header) return;
     if (y < 50) {
       header.style.height = 'var(--nav-height)';
       header.style.boxShadow = 'none';

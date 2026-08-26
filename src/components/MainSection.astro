@@ -16,7 +16,7 @@ const { main } = Astro.props;
 <section class="hero">
   <div class="hero-copy">
     <p class="eyebrow"><span class="prompt">~/</span> supervivencia-linux</p>
-    <h1 class="big-heading name">Aprende Linux.<br /><span>Sobrevive mejor.</span></h1>
+    <h1 class="big-heading name">{main.headings[0]}<br /><span>{main.headings[1]}</span></h1>
     <h2 class="subtitle-hero">Guías prácticas para entender la terminal, administrar servidores y ganar autonomía.</h2>
     <div class="description">
       {main.paragraphs.slice(0, 1).map(p => <p>{p}</p>)}
@@ -116,7 +116,6 @@ const { main } = Astro.props;
 }
 
 .subtitle-hero {
-  color: var(--slate);
   animation: fadeUp 0.5s var(--easing) 0.2s both;
 }
 
@@ -126,12 +125,8 @@ const { main } = Astro.props;
   animation: fadeUp 0.5s var(--easing) 0.3s both;
 }
 
-.hero > div:last-child {
-  animation: fadeUp 0.5s var(--easing) 0.4s both;
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .intro, .name, .subtitle-hero, .description, .hero > div:last-child {
+  .intro, .name, .subtitle-hero, .description {
     animation: none;
   }
 }
